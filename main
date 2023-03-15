@@ -1,0 +1,1239 @@
+// Name: Jake Shumate
+//Date: 2/1/2023     
+//Email: jake.shumate33823@gmail.com or jshumate@mocs.flsouthern.edu
+//Class #:CSC 2290 001
+//Project Name: FSC_ChickflA/Project 1
+//Honor Code: 
+//I, Jake Shumate, will practice academic and personal integrity and excellence of character and expect the same from others.” 
+
+import java.util.*;
+
+public class Main {
+
+    //-----------START OF GLOBAL CONSTANTS---------
+    public static final String LUNCHDINNER_ITEM_1 = "Chick-fil-A Chicken Sandwich";
+
+    public static final String LUNCHDINNER_ITEM_2 = "Spicy Chicken Sandwich";
+
+    public static final String LUNCHDINNER_ITEM_3 = "Grilled Chicken Sandwich";
+
+    public static final String LUNCHDINNER_ITEM_4 = "Waffle Potato Fries";
+
+    public static final String LUNCHDINNER_ITEM_5 = "MilkShake";
+
+    public static final String BREAKFAST_ITEM_1 = "Chick-fil-A Chicken Biscuit";
+
+    public static final String BREAKFAST_ITEM_2 = "Chicken, Egg & Cheese Bagel";
+
+    public static final String BREAKFAST_ITEM_3 = "Hash Brown Scramble Burrito";
+
+    public static final String BREAKFAST_ITEM_4 = "Egg White Grill";
+
+    public static final String BREAKFAST_ITEM_5 = "Hash Browns";
+
+    public static final double LUNCHDINNER_ITEM_1_PRICE = 3.49;
+
+    public static final double LUNCHDINNER_ITEM_2_PRICE = 3.75;
+
+    public static final double LUNCHDINNER_ITEM_3_PRICE = 4.75;
+
+    public static final double LUNCHDINNER_ITEM_4_PRICE = 1.85;
+
+    public static final double LUNCHDINNER_ITEM_5_PRICE = 2.99;
+
+    public static final double BREAKFAST_ITEM_1_PRICE = 3.49;
+
+    public static final double BREAKFAST_ITEM_2_PRICE = 3.69;
+
+    public static final double BREAKFAST_ITEM_3_PRICE = 3.79;
+
+    public static final double BREAKFAST_ITEM_4_PRICE = 3.65;
+
+    public static final double BREAKFAST_ITEM_5_PRICE = 1.09;
+
+    //----------END OF GLOBAL CONSTANTS------------
+    public static void showMainMenu() {
+        //Prints out the Main Menu and prompts user input (1. Place order, 2. Nutritional Info, Exit)
+        System.out.println("----------------------------------------------------------");
+        System.out.println("|             FSC Chick-fil-A Ordering System            |");
+        System.out.println("----------------------------------------------------------");
+        System.out.println("| Please choose from the following menu:                 |");
+        System.out.println("|     1. Place a food order.                             |");
+        System.out.println("|     2. Nutritional Information.                        |");
+        System.out.println("|     3. Exit the Ordering System.                       |");
+        System.out.println("----------------------------------------------------------");
+        System.out.print("> Enter your choice: ");
+
+    }
+
+    public static int readAndVerifyMain(Scanner in) {
+        //while loop that shows main menu, correct answers are 1 ,2 and 3(exit).
+        String mainMenuChoice;
+        while (true) {
+            showMainMenu();
+            mainMenuChoice = in.nextLine();
+
+            //check if mainMenuChoice is 1,2,3
+            if (mainMenuChoice.equals("1") || mainMenuChoice.equals("2") || mainMenuChoice.equals("3")) {
+                return Integer.parseInt(mainMenuChoice);
+            }
+            else {
+                System.out.println("\n> You entered an invalid option. Please try again.");
+            }
+        }
+    }
+
+    public static void showFoodOrderMenu() {
+        //prints out the food order menu
+        System.out.println("");
+        System.out.println("----------------------------------------------------------");
+        System.out.println("|                  Placing a Food Order                  |");
+        System.out.println("----------------------------------------------------------");
+        System.out.println("| Please choose from the following menu:                 |");
+        System.out.println("|     Enter \"Breakfast\" to place a breakfast order       |");
+        System.out.println("|     Enter \"Lunch\" to place a lunch order               |");
+        System.out.println("|     Enter \"Dinner\" to place a dinner order             |");
+        System.out.println("|     Or, enter \"Return\" to return to previous menu      |");
+        System.out.println("----------------------------------------------------------");
+        System.out.print("> Enter your choice: ");
+    }
+
+    public static String readAndVerifyBLDChoice(Scanner in) {
+        //verifys that the choice for FoodOrderMenu is valid
+        String BLDChoice;
+        while (true) {
+            showFoodOrderMenu();
+            BLDChoice = in.nextLine();
+            BLDChoice = BLDChoice.toLowerCase();
+            if (BLDChoice.equals("breakfast") || BLDChoice.equals("lunch") || BLDChoice.equals("dinner") || BLDChoice.equals("return") || BLDChoice.equals("Return")) {
+                BLDChoice = BLDChoice.toLowerCase();
+                return BLDChoice;
+
+            }
+            //If they enter anything other than breakfast, Lunch, or dinner they will be displayed the following message:
+            else {
+                System.out.println("");
+                System.out.println("");
+                System.out.println("> You entered an invalid option. Please try again.");
+                System.out.println("");
+
+            }
+        }
+    }
+
+    public static int readAndVerifyFoodChoice(Scanner in, String BLDMealType) {
+        //checks if the user enters 1,2,3,4,5 if so return as int(the number they chose
+        String foodChoiceNotParsed;
+        int foodChoice;
+        if (BLDMealType.equals("breakfast")) {
+            while (true) {
+                showBreakfastMenu();
+                foodChoiceNotParsed = in.nextLine();
+                if (foodChoiceNotParsed.equals("1") || foodChoiceNotParsed.equals("2") || foodChoiceNotParsed.equals("3") || foodChoiceNotParsed.equals("4") || foodChoiceNotParsed.equals("5")) {
+                    foodChoice = Integer.parseInt(foodChoiceNotParsed);
+                    return foodChoice;
+
+                }
+                //If answer was something other than 1,2,3,4,5 will get invaid message
+                else {
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("> You entered an invalid option. Please try again.");
+                    System.out.println("");
+
+                }
+
+            }
+        }
+        else if (BLDMealType.equals("lunch")) {
+            while (true) {
+                showLunchDinnerMenu("lunch");
+                foodChoiceNotParsed = in.nextLine();
+                if (foodChoiceNotParsed.equals("1") || foodChoiceNotParsed.equals("2") || foodChoiceNotParsed.equals("3") || foodChoiceNotParsed.equals("4") || foodChoiceNotParsed.equals("5")) {
+                    foodChoice = Integer.parseInt(foodChoiceNotParsed);
+                    return foodChoice;
+                }
+                //If answer was something other than 1,2,3,4,5 will get invaid message
+                else {
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("> You entered an invalid option. Please try again.");
+                    System.out.println("");
+
+                }
+            }
+        }
+        else {
+            while (true) {
+                showLunchDinnerMenu("dinner");
+                foodChoiceNotParsed = in.nextLine();
+                if (foodChoiceNotParsed.equals("1") || foodChoiceNotParsed.equals("2") || foodChoiceNotParsed.equals("3") || foodChoiceNotParsed.equals("4") || foodChoiceNotParsed.equals("5")) {
+                    foodChoice = Integer.parseInt(foodChoiceNotParsed);
+                    return foodChoice;
+                }
+                //If answer was something other than 1,2,3,4,5 will get invaid message
+                else {
+                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("> You entered an invalid option. Please try again.");
+                    System.out.println("");
+
+                }
+            }
+        }
+    }
+
+    public static void printReciept(String receiptHeader, String itemsOrdered, double subtotal, char discountType, int numItems) {
+        //takes in the recieptHeader, itemsOrdered, subtotal, discount type, and numItems(all found in main) and prints the reciept
+
+        double discount = 0;
+        String discountSF;
+
+        double total;
+        //calculated discount if they are a student
+        if (discountType == 's') {
+            discount = Math.round(subtotal * 0.4 *100)/100.0;
+            discountSF = "Student Discount:";
+            total = subtotal * 1-discount;
+        }
+        //calculated discount if they are faculty
+        else {
+            discount = Math.round(subtotal * 0.3*100)/100.0;
+            discountSF = "Faculty/Staff Discount:";
+            total = subtotal * 1-discount;
+        }
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(receiptHeader);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.print(itemsOrdered);
+        System.out.println("+    -----------------------------------------------    + ");
+        System.out.printf("+    Subtotal:                                $ %-5.2f   +\n", subtotal);
+        System.out.printf("+    %-23s                  $ %-4.2f    +\n", discountSF, discount);
+        System.out.println("+    -----------------------------------------------    +");
+        System.out.printf("+    Total:                                    $ %-5.2f   +\n", total);
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.printf("+         Your order will be ready in %d minutes.         +\n", numItems);
+        System.out.println("+               Thank you for your order!                +");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+    }
+
+    public static boolean readAndVerifyYesNo(Scanner in) {
+        //verifys the user has entered y or n, returns true or false (y=false, n=true) 
+
+        while (true) {
+            System.out.println("");
+            System.out.print("Would you like another item (Y/N): ");
+            String yesNoDecoy = in.nextLine();
+            String yesNo = yesNoDecoy.toLowerCase();
+            if (yesNo.equals("y")) {
+                return false;
+            }
+            else if (yesNo.equals("n")) {
+                return true;
+            }
+
+            else {
+                System.out.println("");
+                System.out.println("");
+                System.out.println("> You entered an invalid option. Please try again.");
+                System.out.println("");
+
+            }
+        }
+    }
+
+    public static char readAndVerifyDiscountType(Scanner in) {
+        //verifys the user input is either s of f(f=faculty s=student)
+        char studentOrFaculty;
+        String unParsedSorF;
+        while (true) {
+            showDiscount();
+            unParsedSorF = in.nextLine();
+            if (unParsedSorF.equals("s") || unParsedSorF.equals("f")) {
+                studentOrFaculty = unParsedSorF.charAt(0);
+                return studentOrFaculty;
+            }
+            //If answer was something other than s or f invailid message will display
+            else {
+                System.out.println("");
+                System.out.println("");
+                System.out.println("> You entered an invalid option. Please try again.");
+                System.out.println("");
+
+            }
+
+        }
+    }
+
+    public static void showDiscount() {
+        //prompts user for discount type
+        System.out.println("");
+        System.out.println("Florida Southern College Discount Program:");
+        System.out.println("    Enter \"s\" for Student or \"f\" for Faculty/Staff.");
+        System.out.print("Enter your choice: ");
+    }
+
+    public static void showBreakfastMenu() {
+        //prompts the user to choose 1,2,3,4,5
+        System.out.println("");
+        System.out.println("--------------------> Breakfast Menu <--------------------");
+        System.out.println("    1. Chick-fil-A Chicken Biscuit            $3.49");
+        System.out.println("    2. Chicken, Egg & Cheese Bagel            $3.69");
+        System.out.println("    3. Hash Brown Scramble Burrito            $3.79");
+        System.out.println("    4. Egg White Grill                        $3.65");
+        System.out.println("    5. Hash Browns                            $1.09");
+        System.out.println("----------------------------------------------------------");
+        System.out.print("Enter your choice (1, 2, 3, 4, or 5): ");
+    }
+
+    public static void showLunchDinnerMenu(String LDMenuChoice) {
+        //medium method to either display the lunch menu or dinner menu
+        if (LDMenuChoice.equals("lunch")) {
+            showLunchMenu();
+        }
+        else if (LDMenuChoice.equals("dinner")) {
+            showDinnerMenu();
+        }
+    }
+
+    public static void showLunchMenu() {
+        //prompts user to enter 1,2,3,4,5
+        System.out.println("");
+        System.out.println("-------------------->   Lunch Menu   <--------------------");
+        System.out.println("    1. Chick-fil-A Chicken Sandwich           $3.49");
+        System.out.println("    2. Spicy Chicken Sandwich                 $3.75");
+        System.out.println("    3. Grilled Chicken Sandwich               $4.75");
+        System.out.println("    4. Waffle Potato Fries                    $1.85");
+        System.out.println("    5. Milkshake                              $2.99");
+        System.out.println("----------------------------------------------------------");
+        System.out.print("Enter your choice (1, 2, 3, 4, or 5): ");
+
+    }
+
+    public static void showDinnerMenu() {
+        //prompts user to enter 1,2,3,3,4,5
+        System.out.println("");
+        System.out.println("-------------------->  Dinner Menu  <---------------------");
+        System.out.println("    1. Chick-fil-A Chicken Sandwich           $3.49");
+        System.out.println("    2. Spicy Chicken Sandwich                 $3.75");
+        System.out.println("    3. Grilled Chicken Sandwich               $4.75");
+        System.out.println("    4. Waffle Potato Fries                    $1.85");
+        System.out.println("    5. Milkshake                              $2.99");
+        System.out.println("----------------------------------------------------------");
+        System.out.print("Enter your choice (1, 2, 3, 4, or 5): ");
+
+    }
+
+    public static void showBreakfastNMenu() {
+        //Shows the breakfast nutriotional menu
+        System.out.println("");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+-------------------> Breakfast Menu <-------------------+");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+                                                        +");
+        System.out.println("+    1. Chick-fil-A Chicken Biscuit                      +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       440|        20g|        48g|        16g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    2. Chicken, Egg & Cheese Bagel                      +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       460|        18g|        49g|        26g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    3. Hash Brown Scramble Burrito                      +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       690|        38g|        52g|        35g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    4. Egg White Grill                                  +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       300|         7g|        31g|        25g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    5. Hash Browns                                      +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       250|        17g|        23g|         3g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
+
+    }
+
+    public static void showNutritionalMenu() {
+        //prompts user to choose breakfast, lunch, or dinner(nutritional  menu)
+        System.out.println("------------------Nutritional Information-----------------");
+        System.out.println("Please choose from the following:");
+        System.out.println("    Enter \"Breakfast\" to view breakfast nutritional info.");
+        System.out.println("    Enter \"Lunch\" to view lunch nutritional info.");
+        System.out.println("    Enter \"Dinner\" to view dinner nutritional info.");
+        System.out.println("    Or, enter \"Return\" to return to previous menu.");
+        System.out.print("Enter your choice: ");
+    }
+
+    public static String readAndVerifyNMChoice(Scanner in) {
+        //verifys the user input if it is breakfast, lunch or dinner for nutritional menus 
+        String NutritionalMenuChoice;
+        String NMChoice;
+
+        while (true) {
+            showNutritionalMenu();
+            NutritionalMenuChoice = in.nextLine();
+            if (NutritionalMenuChoice.equals("Breakfast") || NutritionalMenuChoice.equals("Lunch") || NutritionalMenuChoice.equals("Dinner") || NutritionalMenuChoice.equals("return") || NutritionalMenuChoice.equals("Return") || NutritionalMenuChoice.equals("ReTURn") || NutritionalMenuChoice.equals("RETURN")) {
+                NMChoice = NutritionalMenuChoice.toLowerCase();
+                return NMChoice;
+            }
+
+            else {
+                System.out.println("");
+                System.out.println("");
+                System.out.println("> You entered an invalid option. Please try again.");
+                System.out.println("");
+
+            }
+
+        }
+    }
+
+    public static void showNLunchInfo() {
+        //shows lunch and dinner nutritional nutitional facts (they are the same)
+        System.out.println("");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+-------------------->  Lunch Menu  <--------------------+");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+                                                        +");
+        System.out.println("+    1. Chick-fil-A Chicken Sandwich                     +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       440|        19g|        40g|        28g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    2. Spicy Chicken Sandwich                           +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       450|        19g|        41g|        29g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    3. Grilled Chicken Sandwich                         +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       310|         6g|        36g|        29g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    4. Waffle Potato Fries                              +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       360|        18g|        43g|         5g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    5. Milkshake                                        +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       580|        22g|        88g|        12g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
+
+    }
+
+    public static void showNDinnerInfo() {
+        //shows nutritional menu for dinner menu
+        System.out.println("");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+------------------->  Dinner Menu  <--------------------+");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+                                                        +");
+        System.out.println("+    1. Chick-fil-A Chicken Sandwich                     +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       440|        19g|        40g|        28g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    2. Spicy Chicken Sandwich                           +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       450|        19g|        41g|        29g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    3. Grilled Chicken Sandwich                         +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       310|         6g|        36g|        29g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    4. Waffle Potato Fries                              +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       360|        18g|        43g|         5g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("+    5. Milkshake                                        +");
+        System.out.println("+    |  Calories|        Fat|      Carbs|    Protein|    +");
+        System.out.println("+    |       580|        22g|        88g|        12g|    +");
+        System.out.println("+    ------------------------------------------------    +");
+        System.out.println("+                                                        +");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("");
+
+    }
+
+    public static String centerString(int spaces, String s) {
+        //spaces has to be an even number
+        String es = "";
+        if (spaces % 2 == 0) {
+            for (int i = 0; i < spaces / 2; i++) {
+                es += " ";
+            }
+            es += s;
+            for (int i = 0; i < 10; i++) {
+                es += " ";
+            }
+
+        }
+        else {
+            return "plz enter an even number or else your string will never be centered.";
+        }
+        return es;
+    }
+
+    public static void main(String[] args) {
+        //where all the action takes place (loops until the user enters 3 while on the main menu
+        Scanner in = new Scanner(System.in);
+        int mainMenuChoice;
+        //stores either 1 2 or 3
+        String NMChoice;
+        //Stores breakfast lunch or dinner for nutritional loop
+        String BLDChoice;
+        //stores breakfast lunch and dinner for food order loop
+        int foodChoice;
+        //stores 1 2 3 4 5 from food order (either B L or D
+        boolean yesNoChoice;
+        //stores true (continuing adding food) or false(ask fro discount, print reciept
+        String itemsOrdered = "";
+        //stores all the items hat the user has entered in a string to then be returned in the print reciept method
+        double subTotal = 0;
+        //adds the price of all items
+        int numItems = 0;
+        //increments every time a user adds an item
+        char discountType;
+        //stores either s or f
+        double totalPriceBeforeDiscount = subTotal;
+        //stores subtotal to then be discounted
+        double totalPriceAfterDiscount;
+        //depending on either s (student discount) or f (faculty discount) will return the final total after discount
+        int orderNumber = 1946;
+        //order number incramented after every consecutive order
+        String BLDHeader;
+        //initializes string of reciept header
+
+        //keep looping until user enters 3
+        while (true) {
+            mainMenuChoice = readAndVerifyMain(in);
+
+            //if 1 do a food order
+            if (mainMenuChoice == 1) {
+
+                BLDChoice = readAndVerifyBLDChoice(in);
+
+                //if breakfast display breakfast menu and return ints
+                if (BLDChoice.equals("breakfast")) {
+                    while (true) {
+                        BLDHeader = "Breakfast";
+                        foodChoice = readAndVerifyFoodChoice(in, "breakfast");
+                        if (foodChoice == 1) {
+                            //keep looping until yesNoChoice is yes
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, BREAKFAST_ITEM_1, BREAKFAST_ITEM_1_PRICE);
+                            subTotal += BREAKFAST_ITEM_1_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered no (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                                //discount type then goes into print reciept and calculates the total price...discountt if off the subtotal S=40% discount, F= 30% discount
+                                //prints reciept then goes back to main menu
+                            }
+                        }
+                        else if (foodChoice == 2) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, BREAKFAST_ITEM_2, BREAKFAST_ITEM_2_PRICE);
+                            subTotal += BREAKFAST_ITEM_2_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered no (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        else if (foodChoice == 3) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, BREAKFAST_ITEM_3, BREAKFAST_ITEM_3_PRICE);
+                            subTotal += BREAKFAST_ITEM_3_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        else if (foodChoice == 4) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, BREAKFAST_ITEM_4, BREAKFAST_ITEM_4_PRICE);
+                            subTotal += BREAKFAST_ITEM_4_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        //if food choice is 5
+                        else {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, BREAKFAST_ITEM_5, BREAKFAST_ITEM_5_PRICE);
+                            subTotal += BREAKFAST_ITEM_5_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                    }
+                }
+
+                else if (BLDChoice.equals("lunch")) {
+                    while (true) {
+                        BLDHeader = "Lunch";
+                        foodChoice = readAndVerifyFoodChoice(in, "lunch");
+                        if (foodChoice == 1) {
+                            //keep looping until yesNoChoice is yes
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_1, LUNCHDINNER_ITEM_1_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_1_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                                //discount type then goes into print reciept and calculates the total price...discountt if off the subtotal S=40% discount, F= 30% discount
+                                //prints reciept then goes back to main menu
+                            }
+                        }
+                        else if (foodChoice == 2) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_2, LUNCHDINNER_ITEM_2_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_2_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        else if (foodChoice == 3) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_3, LUNCHDINNER_ITEM_3_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_3_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        else if (foodChoice == 4) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_4, LUNCHDINNER_ITEM_4_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_4_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        //if food choice is 5
+                        else {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_5, LUNCHDINNER_ITEM_5_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_5_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                    }
+                }
+
+                else if (BLDChoice.equals("dinner")) {
+                    while (true) {
+                        BLDHeader = "Dinner";
+                        foodChoice = readAndVerifyFoodChoice(in, "dinner");
+                        if (foodChoice == 1) {
+                            //keep looping until yesNoChoice is yes
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_1, LUNCHDINNER_ITEM_1_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_1_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes continue looping
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                                //discount type then goes into print reciept and calculates the total price...discountt if off the subtotal S=40% discount, F= 30% discount
+                                //prints reciept then goes back to main menu
+                            }
+                        }
+                        else if (foodChoice == 2) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_2, LUNCHDINNER_ITEM_2_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_2_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes break
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        else if (foodChoice == 3) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_3, LUNCHDINNER_ITEM_3_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_3_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes break
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        else if (foodChoice == 4) {
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_4, LUNCHDINNER_ITEM_4_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_4_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes break
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                        //if food choice is 5
+                        else {
+                            //incrament number of items
+                            numItems++;
+                            //add global veriable item to string itemsOrdered to eventually send to reciept
+                            itemsOrdered += String.format("+    %-1d. %-28s          $ %-5.2f   +\n", numItems, LUNCHDINNER_ITEM_5, LUNCHDINNER_ITEM_5_PRICE);
+                            subTotal += LUNCHDINNER_ITEM_5_PRICE;
+                            //add item to reciept then verify yes or no
+
+                            yesNoChoice = readAndVerifyYesNo(in);
+                            if (yesNoChoice == false) {
+                                //break;
+                            }
+                            //if yes break
+
+                            else {
+                                //if they answered yes (returned false)
+                                discountType = readAndVerifyDiscountType(in);
+                                if (discountType == 's') {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.60;
+                                    //building reciept header
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 's', numItems);
+                                    //after printing reciept, incrament order number, reset items ordered, reset num of items, reset subtotal
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+
+                                }
+                                else {
+                                    totalPriceAfterDiscount = totalPriceBeforeDiscount * 0.70;
+                                    //building recipet header
+                                    String recieptHeader = String.format("+              %9s: Order Number %-4d             +", BLDHeader, orderNumber);
+                                    printReciept(recieptHeader, itemsOrdered, subTotal, 'f', numItems);
+                                    orderNumber++;
+                                    itemsOrdered = "";
+                                    numItems = 0;
+                                    subTotal = 0;
+                                    break;
+                                }
+
+                                //if no ask for discount type, then print reciept
+                            }
+
+                        }
+                    }
+
+                }
+                
+
+            }
+            else if (mainMenuChoice==2){
+                //will loop until the user enters return
+                while(true){
+                NMChoice = readAndVerifyNMChoice(in);
+                //if nutrition menu input is breakfast then display the nutritional breakfast info
+                if(NMChoice.equals("breakfast")){
+                    showBreakfastNMenu();
+                    
+                }
+                //if nutrition menu input is lunch then display the nutritional lunch info
+                else if(NMChoice.equals("lunch")){
+                    showNLunchInfo();
+                }
+                //if nutrition menu input is dinner then display the nutritional dinner info
+                else if(NMChoice.equals("dinner")){
+                    showNDinnerInfo();
+                }
+                else{
+                    break;
+                }
+                }
+            
+            }
+
+            else {
+                //if user type 3 exit program
+                System.out.println("");
+                System.out.println("-----------------Exit the Ordering System-----------------");
+                System.out.println("Goodbye.");
+                break;
+            }
+
+        }
+    }
+}
+//checking final
